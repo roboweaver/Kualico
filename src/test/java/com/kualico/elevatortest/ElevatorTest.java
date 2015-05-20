@@ -279,4 +279,80 @@ public class ElevatorTest {
         assertEquals(instance.getNumFloors(), instance.getCurrentFloor());
         assertEquals(instance.getNumFloors(), instance.getNextFloor());
     }
+
+    /**
+     * Test of getTrips method, of class Elevator.
+     */
+    @Test
+    public void testGetTrips() {
+        System.out.println("getTrips");
+        int expResult = 0;
+        int result = instance.getTrips();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of inService method, of class Elevator.
+     */
+    @Test
+    public void testInService() {
+        System.out.println("inService");
+        boolean expResult = true;
+        boolean result = instance.inService();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test if it gives the right answer after 100 trips
+     * 
+     * FIXME - need a definition of what it means to count trips and code this
+     *         more intelligently.
+     */
+    @Test
+    public void testOutOfService() {
+        System.out.println("Test inService when it should be out of service");
+        instance.setNumFloors(2);
+        for (int i = 0; i < 100; i++) {
+            instance.upward();
+            instance.downward();
+        }
+
+        assertEquals(false, instance.inService());
+    }
+
+    /**
+     * Test of serviceReset method, of class Elevator.
+     */
+    @Test
+    public void testServiceReset() {
+        System.out.println("serviceReset");
+        instance.serviceReset();
+
+    }
+
+    /**
+     * Test of getTripFloors method, of class Elevator.
+     */
+    @Test
+    public void testGetTripFloors() {
+        System.out.println("getTripFloors");
+        int expResult = 0;
+        int result = instance.getTripFloors();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of isOccupied method, of class Elevator.
+     */
+    @Test
+    public void testIsOccupied() {
+        System.out.println("isOccupied");
+        boolean expResult = false;
+        boolean result = instance.isOccupied();
+        assertEquals(expResult, result);
+
+    }
 }

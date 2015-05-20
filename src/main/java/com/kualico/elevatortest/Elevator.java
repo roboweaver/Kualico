@@ -13,9 +13,14 @@ public class Elevator {
     private int currentFloor;
     private boolean doorOpen;
     private List<Integer> stops;
+    
+    private int trips;
+    private int tripFloors;
 
     private boolean goingUp;
     private boolean goingDown;
+    
+    private boolean occupied;
 
     /**
      *
@@ -23,8 +28,9 @@ public class Elevator {
     public Elevator() {
         numFloors = 1;
         currentFloor = 1;
+        trips = 0;
         stops = new ArrayList<>();
-        goingUp = goingDown = false;
+        goingUp = goingDown = occupied = false;
     }
 
     /**
@@ -173,6 +179,10 @@ public class Elevator {
         if (currentFloor == numFloors) {
             setGoingUp(false);
         }
+        if (isStop(currentFloor)){
+            setDoorOpen(true);
+            removeStop(currentFloor);
+        }
         setDoorOpen(isStop(currentFloor));
         return currentFloor;
     }
@@ -186,8 +196,11 @@ public class Elevator {
         currentFloor = nextFloorDown();
         if (currentFloor == 1) {
             setGoingDown(false);
+            // Assumption that we have gone up before going down :)
+            this.trips++;
         }
         setDoorOpen(isStop(currentFloor));
+        removeStop(currentFloor);
         return currentFloor;
     }
 
@@ -234,5 +247,46 @@ public class Elevator {
             stops.remove(floor);
         }
     }
+
+    /**
+     * @return the trips
+     */
+    public int getTrips() {
+        return trips;
+    }
+
+    /**
+     * Returns true if we are in service
+     * @return 
+     */
+    public boolean inService(){
+        return this.trips < 100;
+    }
+    
+    /**
+     * Reset the trips after service is done
+     * 
+     */
+    public void serviceReset(){
+        this.trips = 0;
+    }
+
+    /**
+     * @return the tripFloors
+     */
+    public int getTripFloors() {
+        return tripFloors;
+    }
+
+    /**
+     * @return the occupied
+     */
+    public boolean isOccupied() {
+        return stops.size() > 0;
+    }
+
+ 
+
+    
 
 }
