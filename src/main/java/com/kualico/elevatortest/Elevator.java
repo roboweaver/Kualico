@@ -13,13 +13,13 @@ public class Elevator {
     private int currentFloor;
     private boolean doorOpen;
     private List<Integer> stops;
-    
+
     private int trips;
     private int tripFloors;
 
     private boolean goingUp;
     private boolean goingDown;
-    
+
     private boolean occupied;
 
     /**
@@ -179,7 +179,7 @@ public class Elevator {
         if (currentFloor == numFloors) {
             setGoingUp(false);
         }
-        if (isStop(currentFloor)){
+        if (isStop(currentFloor)) {
             setDoorOpen(true);
             removeStop(currentFloor);
         }
@@ -257,17 +257,18 @@ public class Elevator {
 
     /**
      * Returns true if we are in service
-     * @return 
+     *
+     * @return
      */
-    public boolean inService(){
+    public boolean inService() {
         return this.trips < 100;
     }
-    
+
     /**
      * Reset the trips after service is done
-     * 
+     *
      */
-    public void serviceReset(){
+    public void serviceReset() {
         this.trips = 0;
     }
 
@@ -285,8 +286,43 @@ public class Elevator {
         return stops.size() > 0;
     }
 
- 
+    /**
+     * Will pass a given floor
+     *
+     * @param floor
+     * @return
+     */
+    public boolean willPass(int floor) {
+        boolean returnValue = false;
+        if (getStops().contains(floor)) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
 
-    
+    /**
+     * Returns a number based on the current floor and direction as to how many
+     * floors to the stop in question.
+     *
+     * Will return numFloors if it is not heading toward the floor in question
+     *
+     * Will return floor if it is stopped at floor 1.
+     *
+     * @param floor
+     * @return
+     */
+    public int getTravelFloors(int floor) {
+        int returnValue = getNumFloors();
+        if (isGoingUp()) {
+            if (getCurrentFloor() <= floor) {
+                returnValue = floor - getCurrentFloor();
+            }
+        } else if (isGoingDown()) {
+            if (getCurrentFloor() >= floor) {
+                returnValue = getCurrentFloor() - floor;
+            }
+        }
+        return returnValue;
+    }
 
 }
